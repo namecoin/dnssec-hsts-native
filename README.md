@@ -2,7 +2,7 @@
 
 DNSSEC-HSTS is a WebExtension that upgrades HTTP to HTTPS (simulating HSTS) for websites that support DANE (i.e. websites that list a TLSA record for TCP port 443).  This is a reasonably good heuristic for preventing sslstrip-style attacks.
 
-This repository is for the native (Go) component of DNSSEC-HSTS.
+This repository is for the native (Go) component of DNSSEC-HSTS.  The native component is a fork of Miek Gieben's excellent `q` tool.
 
 ## Installation
 
