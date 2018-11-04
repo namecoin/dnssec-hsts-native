@@ -1,6 +1,6 @@
 {
   "name": "dnssec_hsts",
-  "description": "DNSSEC HSTS",
+  "description": "DNSSEC-HSTS",
   "path": "/usr/bin/dnssec_hsts",
   "type": "stdio",
   "allowed_extensions": [ "dnssec-hsts@namecoin.org" ]
