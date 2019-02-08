@@ -5,9 +5,12 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/json"
+	"log"
 	"os"
 
 	"github.com/miekg/dns"
+	"gopkg.in/hlandau/easyconfig.v1"
+	"gopkg.in/hlandau/easyconfig.v1/cflag"
 
 	"github.com/namecoin/qlib"
 )
@@ -26,7 +29,24 @@ type NativeResponseMessage struct {
 	Ok bool         `json:"ok"`
 }
 
+var (
+	flagGroup      = cflag.NewGroup(nil, "dnssec-hsts")
+	dnsAddressFlag = cflag.String(flagGroup, "nameserver", "", "Use this "+
+		"DNS server for DNS lookups.  (If left empty, the system "+
+		"resolver will be used.)")
+	dnsPortFlag    = cflag.Int(flagGroup, "port", 53, "Use this port for "+
+		"DNS lookups.")
+)
+
 func main() {
+	config := easyconfig.Configurator{
+		ProgramName: "dnssec_hsts",
+	}
+	err := config.Parse(nil)
+	if err != nil {
+		log.Fatalf("Couldn't parse configuration: %s", err)
+	}
+
 	for {
 		s := bufio.NewReader(os.Stdin)
 		length := make([]byte, 4)
@@ -40,11 +60,22 @@ func main() {
 		var ok bool
 
 		qparams := qlib.DefaultParams()
+		qparams.Port = dnsPortFlag.Value()
 		qparams.Ad = true
 		qparams.Fallback = true
 		qparams.Tcp = true // Workaround for https://github.com/miekg/exdns/issues/19
 
-		result, err := qparams.Do([]string{"TLSA", "_443._tcp." + nativeRequest.Hostname})
+		args := []string{}
+		// Set the custom DNS server if requested
+		if dnsAddressFlag.Value() != "" {
+			args = append(args, "@" + dnsAddressFlag.Value())
+		}
+		// Set qtype to TLSA
+		args = append(args, "TLSA")
+		// Set qname to TCP port 443 subdomain of requested hostname
+		args = append(args, "_443._tcp." + nativeRequest.Hostname)
+
+		result, err := qparams.Do(args)
 		if err != nil {
 			// A DNS error occurred.  This could indicate a MITM attack;
 			// upgrade to TLS and report an error.
