@@ -6,7 +6,7 @@ This repository is for the native (Go) component of DNSSEC-HSTS.
 
 ## Installation
 
-Firefox for GNU/Linux:
+### Firefox for GNU/Linux
 
 ~~~
 go get github.com/namecoin/dnssec-hsts-native/src/dnssec_hsts
@@ -15,6 +15,20 @@ sudo cp $GOPATH/bin/dnssec_hsts /usr/bin/
 ~~~
 
 Then install [the WebExtensions component](https://github.com/namecoin/dnssec-hsts) of DNSSEC-HSTS.
+
+### Tor Browser for GNU/Linux
+
+Substitute your own Tor Browser path here:
+
+~~~
+go get github.com/namecoin/dnssec-hsts-native/src/dnssec_hsts
+sudo cp $GOPATH/src/github.com/namecoin/dnssec-hsts-native/setup/dnssec_hsts.json tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.namecoin.dnssec_hsts.json
+sudo cp $GOPATH/bin/dnssec_hsts /usr/bin/
+~~~
+
+Then install [the WebExtensions component](https://github.com/namecoin/dnssec-hsts) of DNSSEC-HSTS.
+
+### Other
 
 On other OS's, it's probably similar but I haven't tried.  Check the WebExtensions docs or something.
 
