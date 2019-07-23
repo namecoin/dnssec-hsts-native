@@ -10,8 +10,8 @@ This repository is for the native (Go) component of DNSSEC-HSTS.
 
 ~~~
 go get github.com/namecoin/dnssec-hsts-native/src/dnssec_hsts
-sudo cp $GOPATH/src/github.com/namecoin/dnssec-hsts-native/setup/dnssec_hsts.json /usr/lib64/mozilla/native-messaging-hosts/
-sudo cp $GOPATH/bin/dnssec_hsts /usr/bin/
+sudo cp $(go env GOPATH)/src/github.com/namecoin/dnssec-hsts-native/setup/org.namecoin.dnssec_hsts.json /usr/lib64/mozilla/native-messaging-hosts/
+sudo cp $(go env GOPATH)/bin/dnssec_hsts /usr/bin/
 ~~~
 
 Then install [the WebExtensions component](https://github.com/namecoin/dnssec-hsts) of DNSSEC-HSTS.
@@ -22,8 +22,8 @@ Substitute your own Tor Browser path here:
 
 ~~~
 go get github.com/namecoin/dnssec-hsts-native/src/dnssec_hsts
-sudo cp $GOPATH/src/github.com/namecoin/dnssec-hsts-native/setup/dnssec_hsts.json tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.namecoin.dnssec_hsts.json
-sudo cp $GOPATH/bin/dnssec_hsts /usr/bin/
+sudo cp $(go env GOPATH)/src/github.com/namecoin/dnssec-hsts-native/setup/org.namecoin.dnssec_hsts.json tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/
+sudo cp $(go env GOPATH)/bin/dnssec_hsts /usr/bin/
 ~~~
 
 Then install [the WebExtensions component](https://github.com/namecoin/dnssec-hsts) of DNSSEC-HSTS.
